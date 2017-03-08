@@ -15,12 +15,12 @@ if (!ctype_alnum($userName)) {
 	die('-1');
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-	
+	// The email is valid
 } else {
 	die('-1');
 }
 $bcrypted_pass = password_hash($password, PASSWORD_BCRYPT);
-$sql = "SELECT * FROM gdpsUserAccounts WHERE username='$userName'";
+$sql = "SELECT * FROM gdpsUserAccounts WHERE username='$userName' OR changedName='$userName'";
 $result = mysqli_query($conn, $sql) or die('-1');
 if (mysqli_num_rows($result) > 0) {
 	die('-2');
