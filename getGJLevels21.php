@@ -6,18 +6,23 @@ $songsstring  = "";
 $hash = "";
 $type = $_POST['type'];
 $str = $_POST['str'];
+$page = $_POST["page"];
+if (!is_numeric($page)) {
+	die('-1');
+}
+$offset = $page * 10;
 if ($type == '0') {
 	if (is_numeric($str)) {
-		$sql = "SELECT * FROM gdpsLevels WHERE levelID=$str OR levelName LIKE '%$str%' ORDER BY likes DESC LIMIT 10 OFFSET 0";
+		$sql = "SELECT * FROM gdpsLevels WHERE levelID=$str OR levelName LIKE '%$str%' ORDER BY likes DESC LIMIT 10 OFFSET $offset";
 	} else {
 		$str = mysql_real_escape_string($str);
-		$sql = "SELECT * FROM gdpsLevels WHERE levelName LIKE '%$str%' ORDER BY likes DESC LIMIT 10 OFFSET 0";
+		$sql = "SELECT * FROM gdpsLevels WHERE levelName LIKE '%$str%' ORDER BY likes DESC LIMIT 10 OFFSET $offset";
 	}
 } else {
 	die('-1');
 }
 $result = mysqli_query($conn, $sql) or die('-1');
-$result2 = mysqli_query($conn, str_replace(' LIMIT 10 OFFSET 0', '', $sql)) or die('-1');
+$result2 = mysqli_query($conn, str_replace(' LIMIT 10 OFFSET '.$offset, '', $sql)) or die('-1');
 if (mysqli_num_rows($result) == 0) {
 	die('-1');
 }
@@ -60,6 +65,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 echo $levelsstring;
 echo "#".$creatorsstring;
 echo "#".$songsstring;
-echo "#".$levelcount.":0:10";
+echo "#".$levelcount.":".$offset.":10";
 echo "#".sha1($hash . "xI25fpAapCQg");
 ?>
