@@ -78,6 +78,8 @@ if (mysqli_num_rows($result2) > 0) {
 	while ($row2 = mysqli_fetch_assoc($result2)) {
 		$userID = $row2['userID'];
 	}
+	$sql_submit2 = "UPDATE gdpsUsers SET userName='$userName', userIP='$client_ip' WHERE accountID=$accountID";
+	mysqli_query($conn, $sql_submit2) or die('-1');
 } else {
 	$sql2 = "INSERT INTO gdpsUsers (accountID, udid, userName, userIP) VALUES ($accountID, '$udid', '$userName', '$client_ip')";
 	$result2 = mysqli_query($conn, $sql2) or die('-1');
