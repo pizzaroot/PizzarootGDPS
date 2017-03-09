@@ -41,8 +41,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 	}
 	$xor = new XORCipher();
 	$xorPass = base64_encode($xor->cipher($row['password'], 26364));
-	$time = date("d-m-Y G-i", $row["time"]);
-	$lastUpdate = date("d-m-Y G-i", $row["lastUpdate"]);
+	$time = makeTime($row["time"]);
+	$lastUpdate = makeTime($row["lastUpdate"]);
 	$demonDiff = '';
 	$levelString = $row["levelString"];
 	echo "1:".$row["levelID"].":2:".$row["levelName"].":3:".$row["levelDesc"].":4:".$levelString.":5:".$row["levelVersion"].":6:".$row["userID"].":8:10:9:".$row["difficulty"].":10:".$downloads.":11:1:12:".$row["audioTrack"].":13:".$row["gameVersion"].":14:".$row["likes"].":17:".$demon.":43:".$demonDiff.":25:".$row["auto"].":18:".$row["stars"].":19:".$row["featured"].":42:".$row["epic"].":45:0:15:".$row["levelLength"].":30:".$row["originalLevel"].":31:0:28:".$time.":29:".$lastUpdate.":35:".$row["songID"].":36:".$row["extraString"].":37:".$row["coins"].":38:".$row["coinsVerified"].":39:".$row["requestedStars"].":46:1:47:2:27:".$xorPass;
