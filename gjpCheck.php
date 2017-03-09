@@ -58,4 +58,6 @@ if ($iplog != '') {
 }
 $sql_submit2 = "UPDATE gdpsUserAccounts SET lastonline=$time WHERE accountID=$accountID";
 mysqli_query($conn, $sql_submit2) or die('-1');
+$sql_submit2 = "UPDATE gdpsUsers SET userIP='$client_ip' WHERE accountID=$accountID";
+mysqli_query($conn, $sql_submit2) or die('-1');
 ?>
