@@ -71,4 +71,8 @@ if (mysqli_num_rows($result) == 0) {
 }
 mysqli_query($conn, $sql_submit) or die('-1');
 echo mysqli_insert_id($conn);
+
+// TO DO LIST: SPAM LEVEL PREVENTION
+// TO DO LIST: LEVEL DESC CHECK
+
 ?>
