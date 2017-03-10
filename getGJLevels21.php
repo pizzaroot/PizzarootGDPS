@@ -13,13 +13,13 @@ if (!is_numeric($page)) {
 $offset = $page * 10;
 if ($type == '0') {
 	if (is_numeric($str)) {
-		$sql = "SELECT * FROM gdpsLevels WHERE levelID=$str OR (unlisted=0 AND levelName LIKE '%$str%') ORDER BY likes, downloads DESC LIMIT 10 OFFSET $offset";
+		$sql = "SELECT * FROM gdpsLevels WHERE levelID=$str OR (unlisted=0 AND levelName LIKE '%$str%') ORDER BY likes DESC, downloads DESC LIMIT 10 OFFSET $offset";
 	} else {
 		$str = mysql_real_escape_string($str);
-		$sql = "SELECT * FROM gdpsLevels WHERE unlisted=0 AND levelName LIKE '%$str%' ORDER BY likes, downloads DESC LIMIT 10 OFFSET $offset";
+		$sql = "SELECT * FROM gdpsLevels WHERE unlisted=0 AND levelName LIKE '%$str%' ORDER BY likes DESC, downloads DESC LIMIT 10 OFFSET $offset";
 	}
 } elseif ($type == '2') {
-	$sql = "SELECT * FROM gdpsLevels ORDER BY likes, downloads DESC LIMIT 10 OFFSET $offset";
+	$sql = "SELECT * FROM gdpsLevels ORDER BY likes DESC, downloads DESC LIMIT 10 OFFSET $offset";
 } elseif ($type == '4') {
 	$sql = "SELECT * FROM gdpsLevels ORDER BY lastUpdate DESC LIMIT 10 OFFSET $offset";
 } else {
