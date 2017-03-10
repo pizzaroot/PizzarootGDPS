@@ -63,7 +63,15 @@ while ($row = mysqli_fetch_assoc($result)) {
 		if ($songsstring != "") {
 			$songsstring .= "~:~";
 		}
-		$songsstring = $songsstring."1~|~".$songID."~|~2~|~U suk dikis~|~3~|~69~|~4~|~PornHub~|~5~|~69.69~|~6~|~~|~10~|~".urlencode("http://pizzaroot.altervista.org/unarmed.mp3")."~|~7~|~~|~8~|~0";
+		$sql3 = "SELECT * FROM gdpsSongs WHERE songID=$songID";
+		$result4 = mysqli_query($conn, $sql3) or die('-1');
+		if (mysqli_num_rows($result4) == 1) {
+			while ($row3 = mysqli_fetch_assoc($result4)) {
+				$songsstring .= "1~|~".$songID."~|~2~|~".$row3['songName']."~|~3~|~".$row3['authorID']."~|~4~|~".$row3['authorName']."~|~5~|~6.9~|~6~|~~|~10~|~".urlencode($row3['downloadLink'])."~|~7~|~~|~8~|~0";
+			}
+		} else {
+			$songsstring .= "1~|~".$songID."~|~2~|~U suk dikis~|~3~|~69~|~4~|~PornHub~|~5~|~69.69~|~6~|~~|~10~|~".urlencode("http://pizzaroot.altervista.org/unarmed.mp3")."~|~7~|~~|~8~|~0";
+		}
 	}
 }
 echo $levelsstring;
