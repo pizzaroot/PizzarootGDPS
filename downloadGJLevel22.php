@@ -9,6 +9,7 @@ if ($secret != "Wmfd2893gb7") {
 }
 $levelID = $_POST["levelID"];
 $client_ip = get_client_ip();
+$current_time = time();
 if (!is_numeric($levelID)) {
 	die('-1');
 }
@@ -18,6 +19,35 @@ if (mysqli_num_rows($result) == 0) {
 	die('-1');
 }
 while ($row = mysqli_fetch_assoc($result)) {
+	// Record to downloadLevelLog
+	if ($row['stars'] != 0) {
+		$sql2 = "SELECT downloadLevelLog FROM gdpsUsers WHERE userIP='$client_ip'";
+		$result2 = mysqli_query($conn, $sql2) or die('-1');
+		if (mysqli_num_rows($result2) == 0) {
+			die('-1');
+		}
+		while ($row2 = mysqli_fetch_assoc($result2)) {
+			$downloadLevelLog = $row2['downloadLevelLog'];
+		}
+		if ($downloadLevelLog == '') {
+			$newdownloadLevelLog = $current_time.';'.$levelID.';'.$row['stars'];
+			$allowedStars = $row['stars'];
+		} else {
+			if (strpos($downloadLevelLog, ';'.$levelID.';') !== false) {
+				$newdownloadLevelLog = $downloadLevelLog;
+			} else {
+				$newdownloadLevelLog = $downloadLevelLog.'|'.$current_time.';'.$levelID.';'.$row['stars'];
+			}
+			$newdownloadLevelLogArr = explode('|', $newdownloadLevelLog);
+			$allowedStars = 0;
+			foreach ($newdownloadLevelLogArr as $eachnewdownloadLevelLog) {
+				$allowedStars += explode(';', $eachnewdownloadLevelLog)[2];
+			}
+		}
+		$sql_submit2 = "UPDATE gdpsUsers SET allowedStars=$allowedStars, downloadLevelLog='$newdownloadLevelLog' WHERE userIP='$client_ip'";
+		mysqli_query($conn, $sql_submit2) or die('-1');
+	}
+	
 	$downloaderIPs = $row['downloaderIPs'];
 	if ($downloaderIPs == '') {
 		$newdownloaderIPs = $client_ip;
