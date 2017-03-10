@@ -1,10 +1,5 @@
 <?php
 include "connection.php";
-if($_POST["accountID"]){
-	$accountID = $_POST["accountID"];
-}else{
-	$accountID = $_POST["udid"];
-}
 $type = $_POST["type"];
 if ($type == "top") {
 	$sql = "SELECT * FROM gdpsUsers WHERE blocked=0 ORDER BY stars DESC, demons DESC LIMIT 100";
@@ -27,4 +22,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 	$rank++;
 }
 echo $finalstring;
+
+// TO DO LIST: GLOBAL AND FRIEND LEADERBOARD
 ?>
