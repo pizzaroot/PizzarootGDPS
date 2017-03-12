@@ -56,13 +56,13 @@ try {
 } catch (Exception $e) {
 	die('-1');
 }
-
+include 'rating.php';
 // Check if the request is for updating level or creating level
 $sql2 = "SELECT * FROM gdpsLevels WHERE userID=$userID AND levelName='$levelName'";
 $result = mysqli_query($conn, $sql2) or die('-1');
 $stringLength = strlen($levelString);
 if (mysqli_num_rows($result) == 0) {
-	$sql_submit = "INSERT INTO gdpsLevels (levelName, levelDesc, levelString, extraString, levelInfo, stringLength, objects, objectsReal, levelVersion, levelLength, userID, audioTrack, gameVersion, requestedStars, coins, password, originalLevel, twoPlayer, unlisted, songID, userIP, time, lastUpdate, updateLog, impossible) VALUES ('$levelName', '$levelDesc', '$levelString', '$extraString', '$levelInfo', $stringLength, $objects, $objectsReal, $levelVersion, $levelLength, $userID, $audioTrack, $gameVersion, $requestedStars, $coins, $password, $original, $twoPlayer, $unlisted, $songID, '$client_ip', $time, $time, '$time~$client_ip', 0);";
+	$sql_submit = "INSERT INTO gdpsLevels (levelName, levelDesc, levelString, extraString, levelInfo, stringLength, objects, objectsReal, levelVersion, levelLength, userID, audioTrack, gameVersion, requestedStars, coins, password, originalLevel, twoPlayer, unlisted, songID, userIP, time, lastUpdate, updateLog, impossible, stars, featured, difficulty) VALUES ('$levelName', '$levelDesc', '$levelString', '$extraString', '$levelInfo', $stringLength, $objects, $objectsReal, $levelVersion, $levelLength, $userID, $audioTrack, $gameVersion, $requestedStars, $coins, $password, $original, $twoPlayer, $unlisted, $songID, '$client_ip', $time, $time, '$time~$client_ip', 0, $stars, $featured, $difficulty)";
 } else if (mysqli_num_rows($result) == 1) {
 	// TO DO LIST: ALLOW UPDATING A LEVEL
 	die('-1');
